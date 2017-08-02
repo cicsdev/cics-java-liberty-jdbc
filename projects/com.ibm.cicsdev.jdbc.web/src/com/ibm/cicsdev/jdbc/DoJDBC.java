@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 
 public class DoJDBC {
 	
-	public static String getCurrentTimestamp() throws Exception {
+	public String getCurrentTimestamp() throws Exception {
 		
 		String currentTimeStamp = null;
 

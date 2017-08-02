@@ -34,9 +34,10 @@ public class SimpleJDBCServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String currentTimeStamp;
 		try {
-			currentTimeStamp = DoJDBC.getCurrentTimestamp();
+			DoJDBC doJDBC = new DoJDBC();
+			currentTimeStamp = doJDBC.getCurrentTimestamp();
 			out.println("SimpleJDBCServlet: DB2 CurrentTimeStamp = " + currentTimeStamp);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			throw new ServletException(e);
 		}
 	}
