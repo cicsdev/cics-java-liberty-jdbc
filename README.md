@@ -9,7 +9,7 @@ Sample JDBC Java EE web application demonstrating how to use a JDBC in a web ser
 
 ## Samples overview
 
-* `com.ibm.cicsdev.jdbc.web` - Dynamic web project containing the SimpleJDBCServlet servlet.  The servlet uses the static DoJDBC class which connects to DB2 by obtaining a DataSource via a JNDI lookup and that uses JMS and returns the current DB2 timestamp from DB2
+* `com.ibm.cicsdev.jdbc.web` - Dynamic web project containing the SimpleJDBCServlet servlet.  The servlet uses the DoJDBC class which connects to DB2 by obtaining a DataSource via a JNDI lookup and that uses JMS and returns the current DB2 timestamp from DB2
 * `com.ibm.cicsdev.jdbc.web.cicsbundle` - CICS bundle project that references the WAR (Dynamic web project) bundle part for deployment in a CICS bundle
 
 ## Pre-requisites
@@ -27,12 +27,12 @@ The sample code can be deployed as an WAR file into a CICS Liberty JVM server. T
 
 ### To configure CICS
 1. Create a Liberty JVM server as described in [4 easy steps](https://developer.ibm.com/cics/2015/06/04/starting-a-cics-liberty-jvm-server-in-4-easy-steps/)
-1. Add the following properties to the JVM profile:
+1. Add the following properties to the JVM profile to automatically configure the CICS default DataSource:
  ```
 -Dcom.ibm.cics.jvmserver.wlp.autoconfigure=true
 -Dcom.ibm.cics.jvmserver.wlp.jdbc.driver.location=/usr/lpp/db2v12/jdbc
 ```
-where  ```/usr/lpp/db2v12/jdbc``` is the location of your JDBC drivers
+where  ```/usr/lpp/db2v12/jdbc``` is the location of the DB2 JDBC driver
 
 ### To deploy the sample into a CICS region 
 1. Change the name of the JVMSERVER in the .warbundle file from DFHWLP to the name of the JVMSERVER resource defined in CICS. 
