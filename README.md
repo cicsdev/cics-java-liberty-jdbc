@@ -40,32 +40,14 @@ where  ```/usr/lpp/db2v12/jdbc``` is the location of your JDBC drivers
 1. Define and install a CICS BUNDLE resource definition referring to the deployed bundle directory on zFS in step 2, and ensure all resources are enabled. 
 
 ## Running the sample
-* The Web application is configured with a context root of *jmsweb* so to invoke the servlet to write records to the simple JMS queue specify the test=putQ parameter after the context root for example:
-[http://host:port/jmsweb?test=putQ](http://host:port/jmsweb?test=putq)  
+* The servlet is accessed with the following URL:
+[http://host:port/com.ibm.cicsdev.jdbc.web/](http://host:port/com.ibm.cicsdev.jdbc.web/)  
 
-If the test is successful, you will see the following response written to the browser:  
-`22/06/2017 16:11:20 Message has been written to queue:///DEMO.SIMPLEQ`
-
-* To read the records back specify the readQ parameter:
-[http://host:port/jmsweb?test=readQ](http://host:port/jmsweb?test=readq)
-
-* To write records to the MDB queue specify the putmdbQ parameter:
-[http://host:port/jmsweb?test=putmdbQ](http://host:port/jmsweb?test=putmdbq)  
-
-* To verify that the MDB has been triggered, you can read the contents of the CICS TSQ using the readTSQ test parameter:
-[http://host:port/jmsweb?test=readtsq](http://host:port/jmsweb?test=readtsq)
-
+If the test is successful, you will see the a response similar to the following written to the browser:  
+`SimpleJDBCServlet: DB2 CurrentTimeStamp = 2017-08-02 11:28:46.18055`
 
 ## Reference
-*  MQ Knowledge Center [Liberty and the IBM MQ resource adapter](https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_9.0.0/com.ibm.mq.dev.doc/q120040_.htm)
-*  Liberty Knowledge Center [Deploying message-driven beans to connect to IBM MQ](https://www.ibm.com/support/knowledgecenter/en/SS7K4U_liberty/com.ibm.websphere.wlp.zseries.doc/ae/twlp_dep_msg_mdbwmq.html)
-*  MQRC_OBJECT_IN_USE if the MDB tries to get a message from a queue that is not defined as shareable [Defining MDB queues as shareable](http://www-01.ibm.com/support/docview.wss?uid=swg21232930)
-*  For further details on the JCICS APIs used in this sample refer to this [CICS developer center article](https://developer.ibm.com/cics/2017/02/27/jcics-the-java-api-for-cics/)
-
-
+*  CICS Knowledge Center [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.4.0/configuring/java/config_jvmserver_liberty.html)
 
 ## License
-This project is licensed under [Apache License Version 2.0](LICENSE).  
-
-
-
+This project is licensed under [Apache License Version 2.0](LICENSE).
