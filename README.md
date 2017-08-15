@@ -48,6 +48,7 @@ If the test is successful, you will see the a response similar to the following 
 
 ## Reference
 *  CICS Knowledge Center [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.4.0/configuring/java/config_jvmserver_liberty.html)
+*  CICS Knowledge Center [Configuring a JVM server to support DB2](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/applications/developing/database/dfhtk4b.html)
 
 ## License
 This project is licensed under [Apache License Version 2.0](LICENSE).
