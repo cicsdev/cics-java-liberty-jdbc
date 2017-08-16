@@ -13,6 +13,7 @@ package com.ibm.cicsdev.jdbc;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,20 @@ import javax.servlet.http.HttpServletResponse;
 public class SimpleJDBCServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+
+	private DoJDBC doJDBC;
+	
+	/**
+	 * @see Servlet#init(ServletConfig)
+	 */
+	public void init(ServletConfig config) throws ServletException {
+		try {
+			doJDBC = new DoJDBC();
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
+	} 
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -34,7 +49,6 @@ public class SimpleJDBCServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String currentTimeStamp;
 		try {
-			DoJDBC doJDBC = new DoJDBC();
 			currentTimeStamp = doJDBC.getCurrentTimestamp();
 			out.println("SimpleJDBCServlet: DB2 CurrentTimeStamp = " + currentTimeStamp);
 		} catch (Exception e) {

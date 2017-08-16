@@ -20,13 +20,20 @@ import javax.sql.DataSource;
 
 public class DoJDBC {
 	
+	private DataSource dataSource;
+
+	public DoJDBC() throws Exception {
+		
+		// Use JNDI to find the dataSource
+		Context initialContext = new InitialContext();
+		dataSource = (DataSource) initialContext.lookup("jdbc/defaultCICSDataSource");		
+	}
+	
 	public String getCurrentTimestamp() throws Exception {
 		
 		String currentTimeStamp = null;
 
 		// Obtain a DataSource Connection
-		Context initialContext = new InitialContext();
-		DataSource dataSource = (DataSource) initialContext.lookup("jdbc/defaultCICSDataSource");
 		Connection connection = dataSource.getConnection();
 
 		// Execute the SQL
