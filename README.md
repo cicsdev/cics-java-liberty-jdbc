@@ -1,7 +1,7 @@
 cics-java-liberty-jdbc
 =====================
 
-Sample JDBC Java EE web application demonstrating how to access a DB2 database from a web servlet in CICS Liberty.
+Sample JDBC Java EE web application demonstrating how to access a DB2 database from a web servlet in CICS Liberty. 
 
 
 ## Repository structure
