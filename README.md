@@ -20,16 +20,18 @@ Sample JDBC Java EE web application demonstrating how to access a DB2 database f
 * IBM Db2 for z/OS 
 
 ## Configuration
-The sample code can be deployed as a WAR file into a CICS Liberty JVM server. The SimpleJDBCServlet servlet can then be used to display the current timestamp from DB2
+The sample code can be deployed as a WAR file into a CICS Liberty JVM server. CICS Liberty can be configured to use either a local DB2 database with 
+JDBC type 2 connectivity,  or a remote database with a JDBC type 4 connectivity. The SimpleJDBCServlet servlet can then be used to display the current 
+timestamp from DB2
 
 ### To import the samples into Eclipse
 1. Import the projects into CICS Explorer using **File -> Import -> General -> Existing** projects into workspace
 1. Resolve the build path errors on the Dynamic web project using the following menu from the web project: **Build Path -> Configure Build Path -> Libraries -> Add Library -> CICS with Java EE and Liberty** and select the version of CICS TS for deployment (either CICS TS V5.3 or CICS TS V5.4)
 
-### To configure CICS for type 2 driver access to DB2
+### To configure CICS for JDBC type 2 connectivity to DB2
 1. Create a Liberty JVM server as described in [4 easy steps](https://developer.ibm.com/cics/2015/06/04/starting-a-cics-liberty-jvm-server-in-4-easy-steps/)
 1. UPdate the CICS STEPLIB with the DB2 libraries and configure the CICS DB2CONN, DB2TRAN and DB2ENTRY resources [How you can define the CICS DB2 connection](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/configuring/databases/dfhtk2c.html)
-1. Add the following properties to the JVM profile to automatically configure the CICS default DataSource:
+1. Add the following properties to the JVM profile to automatically configure the CICS default DataSource
  ```
 -Dcom.ibm.cics.jvmserver.wlp.autoconfigure=true
 -Dcom.ibm.cics.jvmserver.wlp.jdbc.driver.location=/usr/lpp/db2v12/jdbc
