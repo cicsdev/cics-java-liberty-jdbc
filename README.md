@@ -1,6 +1,7 @@
-CICS Liberty DataSource JDBC sample
+cics-java-liberty-jdbc
+=====================
 
-Sample JDBC Java EE web application demonstrating how to use a JDBC in a web servlet.
+Sample JDBC Java EE web application demonstrating how to access a DB2 database from a web servlet in CICS Liberty.
 
 
 ## Repository structure
@@ -9,24 +10,25 @@ Sample JDBC Java EE web application demonstrating how to use a JDBC in a web ser
 
 ## Samples overview
 
-* `com.ibm.cicsdev.jdbc.web` - Dynamic web project containing the SimpleJDBCServlet servlet.  The servlet uses the DoJDBC class which connects to DB2 by obtaining a DataSource via a JNDI lookup and that uses JMS and returns the current DB2 timestamp from DB2
+* `com.ibm.cicsdev.jdbc.web` - Dynamic web project containing the SimpleJDBCServlet servlet.  The servlet uses the DoJDBC class which connects to DB2 by obtaining a DataSource via a JNDI lookup and returns the current DB2 timestamp from DB2
 * `com.ibm.cicsdev.jdbc.web.cicsbundle` - CICS bundle project that references the WAR (Dynamic web project) bundle part for deployment in a CICS bundle
 
 ## Pre-requisites
 * CICS TS V5.3 with APAR PI67640 and APAR PI58375, or CICS TS V5.4
 * Java SE 7 or later on the z/OS system
-* Java SE 7 or later on the workstation
 * CICS Explorer V5.4 with the IBM CICS SDK for Java EE and Liberty feature installed [available here](https://developer.ibm.com/mainframe/products/downloads)
+* IBM Db2 for z/OS 
 
 ## Configuration
-The sample code can be deployed as an WAR file into a CICS Liberty JVM server. The SimpleJDBCServlet servlet can then be used to display the current timestam from DB2
+The sample code can be deployed as a WAR file into a CICS Liberty JVM server. The SimpleJDBCServlet servlet can then be used to display the current timestamp from DB2
 
 ### To import the samples into Eclipse
 1. Import the projects into CICS Explorer using **File -> Import -> General -> Existing** projects into workspace
-1. Resolve the build path errors on the Dynamic web project using the following menu from each project: **Build Path -> Configure Build Path -> Libraries -> Add Library -> CICS with Java EE and Liberty** and select the version of CICS TS for deployment (either CICS TS V5.3 or CICS TS V5.4)
+1. Resolve the build path errors on the Dynamic web project using the following menu from the web project: **Build Path -> Configure Build Path -> Libraries -> Add Library -> CICS with Java EE and Liberty** and select the version of CICS TS for deployment (either CICS TS V5.3 or CICS TS V5.4)
 
-### To configure CICS
+### To configure CICS for type 2 driver access to DB2
 1. Create a Liberty JVM server as described in [4 easy steps](https://developer.ibm.com/cics/2015/06/04/starting-a-cics-liberty-jvm-server-in-4-easy-steps/)
+1. UPdate the CICS STEPLIB with the DB2 libraries and configure the CICS DB2CONN, DB2TRAN and DB2ENTRY resources [How you can define the CICS DB2 connection](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/configuring/databases/dfhtk2c.html)
 1. Add the following properties to the JVM profile to automatically configure the CICS default DataSource:
  ```
 -Dcom.ibm.cics.jvmserver.wlp.autoconfigure=true
