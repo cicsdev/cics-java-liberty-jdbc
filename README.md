@@ -4,7 +4,7 @@ cics-java-liberty-jdbc
 Sample JDBC Java EE web application demonstrating how to access a DB2 database from a web servlet in CICS Liberty.
 
 
-## Repository structure
+## Repository structure 
 
 * [`projects/`](projects) - Eclipse projects suitable for importing into a CICS Explorer environment.
 
