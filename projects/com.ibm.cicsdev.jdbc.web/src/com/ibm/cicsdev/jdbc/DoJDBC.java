@@ -13,23 +13,39 @@ package com.ibm.cicsdev.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+/**
+ * Implementation class for CICS JDBC sample
+ *
+ */
 public class DoJDBC {
 	
 	private DataSource dataSource;
 
+	/**
+	 * Default constructor to lookup datasource in JNDI
+	 * 
+	 * @throws Exception
+	 */
 	public DoJDBC() throws Exception {
 		
-		// Use JNDI to find the dataSource
 		Context initialContext = new InitialContext();
 		dataSource = (DataSource) initialContext.lookup("jdbc/defaultCICSDataSource");		
 	}
 	
-	public String getCurrentTimestamp() throws Exception {
+	/**
+	 * Use JDBC to get current time from DB2 system table
+	 * 
+	 * @return String - - formatted time stamp from DB2
+	 * @throws SQLException
+	 */
+	public String getCurrentTimestamp() throws SQLException  {
+		
 		
 		String currentTimeStamp = null;
 
@@ -42,12 +58,12 @@ public class DoJDBC {
 		
 		// Get the results
 		if (resultSet == null) {
-			throw new Exception("Error: SQL query did not return any results");
+			throw new RuntimeException("Error: SQL query did not return any results");
 		}
 		resultSet.next();
 		currentTimeStamp = resultSet.getTimestamp(1).toString().trim();
 
-		// Commit
+		// Commit the connection
 		connection.commit();
 
 		// Close the connection
