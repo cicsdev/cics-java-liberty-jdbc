@@ -13,6 +13,7 @@ package com.ibm.cicsdev.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -29,7 +30,7 @@ public class DoJDBC {
 		dataSource = (DataSource) initialContext.lookup("jdbc/defaultCICSDataSource");		
 	}
 	
-	public String getCurrentTimestamp() throws Exception {
+	public String getCurrentTimestamp() throws SQLException {
 		
 		String currentTimeStamp = null;
 
@@ -42,7 +43,7 @@ public class DoJDBC {
 		
 		// Get the results
 		if (resultSet == null) {
-			throw new Exception("Error: SQL query did not return any results");
+			throw new SQLException("Error: SQL query did not return any results");
 		}
 		resultSet.next();
 		currentTimeStamp = resultSet.getTimestamp(1).toString().trim();
