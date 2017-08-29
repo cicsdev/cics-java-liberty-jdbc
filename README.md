@@ -30,7 +30,7 @@ timestamp from DB2
 
 ### To configure CICS for JDBC type 2 connectivity to DB2
 1. Create a Liberty JVM server as described in [4 easy steps](https://developer.ibm.com/cics/2015/06/04/starting-a-cics-liberty-jvm-server-in-4-easy-steps/)
-1. UPdate the CICS STEPLIB with the DB2 libraries and configure the CICS DB2CONN, DB2TRAN and DB2ENTRY resources [How you can define the CICS DB2 connection](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/configuring/databases/dfhtk2c.html)
+1. Update the CICS STEPLIB with the DB2 libraries and configure the CICS DB2CONN, DB2TRAN and DB2ENTRY resources [How you can define the CICS DB2 connection](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/configuring/databases/dfhtk2c.html)
 1. Add the following properties to the JVM profile to automatically configure the CICS default DataSource
  ```
 -Dcom.ibm.cics.jvmserver.wlp.autoconfigure=true
