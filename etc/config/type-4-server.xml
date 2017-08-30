@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="CICS Liberty profile JDBC configuration">
+
+	<!-- Enable features -->
+	<featureManager>
+		<feature>cicsts:core-1.0</feature>
+		<feature>jsp-2.3</feature>
+		<feature>jdbc-4.1</feature>
+	</featureManager>
+
+	<!-- Default HTTP End Point -->
+	<httpEndpoint host="*" httpPort="9080" id="defaultHttpEndpoint"/>
+
+	<!-- CICS Bundle Installed Applications -->
+	<include location="${server.output.dir}/installedApps.xml"/>
+
+	<!-- DataSource with type 4 JDBC driver -->
+	<dataSource id="type4" jndiName="jdbc/defaultCICSDataSource" transactional="false">
+		<jdbcDriver libraryRef="defaultCICSDb2Library"/>
+		<properties.db2.jcc driverType="4" 
+				    databaseName="DSNV11P2"
+				    serverName="winmvs2c.hursley.ibm.com"
+				    portNumber="41100"
+				    user="dbuser"
+				    password="password" />
+	</dataSource>
+
+	<!-- Library DB2 JDBC Driver -->
+	<library id="defaultCICSDb2Library">
+		<fileset dir="/usr/lpp/db2v12/jdbc/classes" includes="db2jcc4.jar db2jcc_license_cisuz.jar"/>
+		<fileset dir="/usr/lpp/db2v12/jdbc/lib" includes="libdb2jcct2zos4_64.so"/>
+	</library>
+
+</server>
