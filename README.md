@@ -7,7 +7,7 @@ Sample JDBC Java EE web application demonstrating how to access a DB2 database f
 ## Repository structure
 
 * [`projects/`](projects) - Eclipse projects suitable for importing into a CICS Explorer environment.
-* [`etc/`](etc) - Liberty server configuration file
+* [`etc/`](etc) - Liberty server configuration files
 
 ## Samples overview
 
