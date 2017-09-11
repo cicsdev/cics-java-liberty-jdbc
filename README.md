@@ -41,6 +41,8 @@ timestamp from DB2
 ```
 where  ```/usr/lpp/db2v12/jdbc``` is the location of the DB2 JDBC driver
 
+Example configuration of DataSource with a type 2 driver can be seen in [etc/config/type-2-server.xml](etc/config/type-2-server.xml). Configuration with DataSource and a type 4 diver is in [etc/config/type-4-server.xml](etc/config/type-4-server.xml)
+
 ### To deploy the sample into a CICS region 
 1. Change the name of the JVMSERVER in the .warbundle file from DFHWLP to the name of the JVMSERVER resource defined in CICS. 
 1. Using the CICS Explorer export the ```com.ibm.cicsdev.jdbc.web.cicsbundle``` project to a zFS directory. 
