@@ -35,14 +35,14 @@ timestamp from DB2
 1. UPdate the CICS STEPLIB with the DB2 SDSNLOAD and SDSNLOD2libraries
 1. configure CICS DB2CONN, DB2TRAN and DB2ENTRY resource definitions [How you can define the CICS DB2 connection](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/configuring/databases/dfhtk2c.html)
 1. Add the following properties in the JVM profile to set the location of the DB2 drivers and allow CICS to automatically configure the default DataSource 
-where  ```/usr/lpp/db2v12/jdbc``` is the location of the DB2 JDBC driver
 
 ```
 -Dcom.ibm.cics.jvmserver.wlp.autoconfigure=true
 -Dcom.ibm.cics.jvmserver.wlp.jdbc.driver.location=/usr/lpp/db2v12/jdbc
 ```
+where  ```/usr/lpp/db2v12/jdbc``` is the location of the DB2 JDBC driver
 
-Example configuration of a DataSource with a type 2 connection can be seen in [etc/config/type-2-server.xml](etc/config/type-2-server.xml). Configuration with DataSource and a type 4 connection is in [etc/config/type-4-server.xml](etc/config/type-4-server.xml)
+Example Liberty server configuration of a DataSource with a type 2 connection can be seen in [etc/config/type-2-server.xml](etc/config/type-2-server.xml). Configuration with DataSource and a type 4 connection is in [etc/config/type-4-server.xml](etc/config/type-4-server.xml)
 
 ### To deploy the sample into a CICS region 
 1. Change the name of the JVMSERVER in the .warbundle file from DFHWLP to the name of the JVMSERVER resource defined in CICS. 
