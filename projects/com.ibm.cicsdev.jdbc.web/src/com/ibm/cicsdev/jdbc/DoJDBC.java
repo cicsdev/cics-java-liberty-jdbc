@@ -25,6 +25,7 @@ import javax.sql.DataSource;
  */
 public class DoJDBC {
 	
+	/** Datasource obtained from JNDI lookup */
 	private DataSource dataSource;
 
 	/**
