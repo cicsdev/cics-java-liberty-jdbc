@@ -32,9 +32,9 @@ timestamp from DB2
 
 ### To configure CICS for JDBC type 2 connectivity to DB2
 1. Create a Liberty JVM server as described in [4 easy steps](https://developer.ibm.com/cics/2015/06/04/starting-a-cics-liberty-jvm-server-in-4-easy-steps/)
-1. UPdate the CICS STEPLIB with the DB2 SDSNLOAD and SDSNLOD2libraries
-1. configure CICS DB2CONN, DB2TRAN and DB2ENTRY resource definitions [How you can define the CICS DB2 connection](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/configuring/databases/dfhtk2c.html)
-1. Add the following properties in the JVM profile to set the location of the DB2 drivers and allow CICS to automatically configure the default DataSource 
+1. Update the CICS STEPLIB with the DB2 SDSNLOAD and SDSNLOD2libraries
+1. Configure CICS DB2CONN, DB2TRAN and DB2ENTRY resource definitions as required see [How you can define the CICS DB2 connection](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/configuring/databases/dfhtk2c.html)
+1. Add the following properties in the JVM profile to set the location of the DB2 drivers to allow CICS to automatically configure the default DataSource 
 
 ```
 -Dcom.ibm.cics.jvmserver.wlp.autoconfigure=true
@@ -42,7 +42,7 @@ timestamp from DB2
 ```
 Where  ```/usr/lpp/db2v12/jdbc``` is the location of the DB2 JDBC driver
 
-Example Liberty server configuration of a DataSource with a type 2 connection is supplied in [etc/config/type-2-server.xml](etc/config/type-2-server.xml). Configuration with DataSource and a type 4 connection is in [etc/config/type-4-server.xml](etc/config/type-4-server.xml)
+An example Liberty server configuration of a DataSource with a type 2 connection is supplied in [etc/config/type-2-server.xml](etc/config/type-2-server.xml). Configuration with DataSource and a type 4 connection is in [etc/config/type-4-server.xml](etc/config/type-4-server.xml)
 
 ### To deploy the sample into a CICS region 
 1. Change the name of the JVMSERVER in the .warbundle file from DFHWLP to the name of the JVMSERVER resource defined in CICS. 
@@ -54,6 +54,7 @@ Example Liberty server configuration of a DataSource with a type 2 connection is
 [http://host:port/com.ibm.cicsdev.jdbc.web/](http://host:port/com.ibm.cicsdev.jdbc.web/)  
 
 If the test is successful, you will see a response similar to the following written to the browser:  
+
 `SimpleJDBCServlet: DB2 CurrentTimeStamp = 2017-08-02 11:28:46.18055`
 
 ## Reference
