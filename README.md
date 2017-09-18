@@ -34,6 +34,7 @@ timestamp from DB2
 1. Create a Liberty JVM server as described in [4 easy steps](https://developer.ibm.com/cics/2015/06/04/starting-a-cics-liberty-jvm-server-in-4-easy-steps/)
 1. Update the CICS STEPLIB with the DB2 SDSNLOAD and SDSNLOD2libraries
 1. Configure CICS DB2CONN, DB2TRAN and DB2ENTRY resource definitions as required see [How you can define the CICS DB2 connection](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/configuring/databases/dfhtk2c.html)
+1. Bind the DB2 plan that is specified in the CICS DB2CONN or DB2ENTRY definition with a PKLIST of NULLID.* 
 1. Add the following properties in the JVM profile to set the location of the DB2 drivers to allow CICS to automatically configure the default DataSource 
 
 ```
