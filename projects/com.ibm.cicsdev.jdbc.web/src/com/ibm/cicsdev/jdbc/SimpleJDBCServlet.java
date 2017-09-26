@@ -27,14 +27,13 @@ import javax.servlet.http.HttpServletResponse;
 public class SimpleJDBCServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
 	/**
 	 * Reference to DoJDBC class
 	 */
 	private DoJDBC doJDBC;
-	
+
 	/**
-	 * Servlet initialisation method 
+	 * Servlet initialisation method
 	 * 
 	 * @see Servlet#init(ServletConfig)
 	 */
@@ -45,32 +44,37 @@ public class SimpleJDBCServlet extends HttpServlet {
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
-	} 
-	
+	}
+
 	/**
-	 * HTTP GET - to invoke test 
+	 * HTTP GET - to invoke test
 	 *
-	 * @param request - HTTP request
-	 * @param response  - HTTP response
+	 * @param request
+	 *            - HTTP request
+	 * @param response
+	 *            - HTTP response
 	 * @throws IOException
 	 * @throws ServletException
 	 *             - if an error occurs.
 	 * 
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 		// Set HTML content type
 		response.setContentType("text/plain");
-		
-		//Initialise variables
+
+		// Initialise variables
 		PrintWriter out = response.getWriter();
 		String currentTimeStamp;
-		
+
 		// Call DoJDBC to get time stamp
 		try {
 			currentTimeStamp = doJDBC.getCurrentTimestamp();
-			out.println("SimpleJDBCServlet: DB2 CurrentTimeStamp = " + currentTimeStamp);
+			out.println("SimpleJDBCServlet: DB2 CurrentTimeStamp = "
+					+ currentTimeStamp);
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}

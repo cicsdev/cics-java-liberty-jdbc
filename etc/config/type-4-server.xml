@@ -19,10 +19,10 @@
 		<jdbcDriver libraryRef="defaultCICSDb2Library"/>
 		<properties.db2.jcc driverType="4" 
 				    databaseName="DSNV11P2"
-				    serverName="winmvs2c.hursley.ibm.com"
-				    portNumber="41100"
-				    user="dbuser"
-				    password="password" />
+				    serverName="localhost"
+				    portNumber="<port>"
+				    user="<userid>"
+				    password="<password>" />
 	</dataSource>
 
 	<!-- Library DB2 JDBC Driver -->

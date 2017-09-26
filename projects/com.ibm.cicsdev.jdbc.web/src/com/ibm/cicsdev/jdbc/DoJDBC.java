@@ -24,7 +24,7 @@ import javax.sql.DataSource;
  *
  */
 public class DoJDBC {
-	
+
 	/** Datasource obtained from JNDI lookup */
 	private DataSource dataSource;
 
@@ -34,32 +34,34 @@ public class DoJDBC {
 	 * @throws Exception
 	 */
 	public DoJDBC() throws Exception {
-		
+
 		Context initialContext = new InitialContext();
-		dataSource = (DataSource) initialContext.lookup("jdbc/defaultCICSDataSource");		
+		dataSource = (DataSource) initialContext
+				.lookup("jdbc/defaultCICSDataSource");
 	}
-	
+
 	/**
 	 * Use JDBC to get current time from DB2 system table
 	 * 
 	 * @return String - - formatted time stamp from DB2
 	 * @throws SQLException
 	 */
-	public String getCurrentTimestamp() throws SQLException  {
-		
-		
+	public String getCurrentTimestamp() throws SQLException {
+
 		String currentTimeStamp = null;
 
 		// Obtain a DataSource Connection
 		Connection connection = dataSource.getConnection();
 
 		// Execute the SQL
-		PreparedStatement preparedStatement = connection.prepareStatement("SELECT CURRENT TIMESTAMP FROM SYSIBM.SYSDUMMY1");
+		PreparedStatement preparedStatement = connection
+				.prepareStatement("SELECT CURRENT TIMESTAMP FROM SYSIBM.SYSDUMMY1");
 		ResultSet resultSet = preparedStatement.executeQuery();
-		
+
 		// Get the results
 		if (resultSet == null) {
-			throw new RuntimeException("Error: SQL query did not return any results");
+			throw new RuntimeException(
+					"Error: SQL query did not return any results");
 		}
 		resultSet.next();
 		currentTimeStamp = resultSet.getTimestamp(1).toString().trim();
@@ -69,7 +71,7 @@ public class DoJDBC {
 
 		// Close the connection
 		connection.close();
-		
+
 		// Return the user
 		return currentTimeStamp;
 	}
