@@ -18,7 +18,7 @@
 	<dataSource id="type4" jndiName="jdbc/defaultCICSDataSource" transactional="false">
 		<jdbcDriver libraryRef="defaultCICSDb2Library"/>
 		<properties.db2.jcc driverType="4" 
-				    databaseName="DSNV11P2"
+				    databaseName="<database>"
 				    serverName="localhost"
 				    portNumber="<port>"
 				    user="<userid>"
