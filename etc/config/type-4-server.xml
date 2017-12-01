@@ -8,12 +8,6 @@
 		<feature>jdbc-4.1</feature>
 	</featureManager>
 
-	<!-- Default HTTP End Point -->
-	<httpEndpoint host="*" httpPort="9080" id="defaultHttpEndpoint"/>
-
-	<!-- CICS Bundle Installed Applications -->
-	<include location="${server.output.dir}/installedApps.xml"/>
-
 	<!-- DataSource with type 4 JDBC driver -->
 	<dataSource id="type4" jndiName="jdbc/defaultCICSDataSource" >
 		<jdbcDriver libraryRef="defaultCICSDb2Library"/>
