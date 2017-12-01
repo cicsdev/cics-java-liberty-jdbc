@@ -15,7 +15,7 @@
 	<include location="${server.output.dir}/installedApps.xml"/>
 
 	<!-- DataSource with type 4 JDBC driver -->
-	<dataSource id="type4" jndiName="jdbc/defaultCICSDataSource" transactional="false">
+	<dataSource id="type4" jndiName="jdbc/defaultCICSDataSource" >
 		<jdbcDriver libraryRef="defaultCICSDb2Library"/>
 		<properties.db2.jcc driverType="4" 
 				    databaseName="<database>"
