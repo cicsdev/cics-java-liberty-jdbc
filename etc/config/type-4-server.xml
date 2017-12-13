@@ -9,7 +9,7 @@
 	</featureManager>
 
 	<!-- DataSource with type 4 JDBC driver -->
-	<dataSource id="type4" jndiName="jdbc/defaultCICSDataSource" >
+	<dataSource id="type4" jndiName="jdbc/defaultCICSDataSource" type="javax.sql.XADataSource" >
 		<jdbcDriver libraryRef="defaultCICSDb2Library"/>
 		<properties.db2.jcc driverType="4" 
 				    databaseName="<database>"
