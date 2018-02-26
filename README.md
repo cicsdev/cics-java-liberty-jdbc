@@ -16,7 +16,7 @@ to DB2 by obtaining a DataSource via a JNDI lookup and returns the current times
 * `com.ibm.cicsdev.jdbc.web.cicsbundle` - CICS bundle project that references the WAR (Dynamic web project) bundle part for deployment in a CICS bundle
 
 ## Pre-requisites
-* CICS TS V5.3 with APAR PI67640 and APAR PI58375, or CICS TS V5.4
+* CICS TS V5.3 with APAR PI77502 or CICS TS V5.4 
 * Java SE 7 or later on the z/OS system
 * CICS Explorer V5.4 with the IBM CICS SDK for Java EE and Liberty feature installed [available here](https://developer.ibm.com/mainframe/products/downloads)
 * IBM Db2 for z/OS 
