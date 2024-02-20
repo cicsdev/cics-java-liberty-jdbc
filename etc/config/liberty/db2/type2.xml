@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="Db2 type 2 JDBC driver template configuration">
+
+	<!-- DataSource with type 2 JDBC driver -->
+	<dataSource id="db2Type2JdbcDataSource" jndiName="jdbc/defaultCICSDataSource" transactional="false">
+		<jdbcDriver libraryRef="db2Type2JdbcLibrary"/>
+		<properties.db2.jcc driverType="2"/>
+		<connectionManager agedTimeout="0"/>
+	</dataSource>
+
+	<!-- Library DB2 JDBC Driver -->
+	<library id="db2Type2JdbcLibrary">
+		<fileset dir="/usr/lpp/db2v13/jdbc/classes" includes="db2jcc4.jar db2jcc_license_cisuz.jar"/>
+		<fileset dir="/usr/lpp/db2v13/jdbc/lib" includes="libdb2jcct2zos4_64.so"/>
+	</library>
+
+</server>

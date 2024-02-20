@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="CICS Liberty JVM server JDBC template configuration">
+
+	<!-- Enable features -->
+	<featureManager>
+		<feature>cicsts:core-1.0</feature>
+		<feature>jsp-2.3</feature>
+		<feature>jdbc-4.1</feature>
+	</featureManager>
+
+    <!-- Default HTTP End Point -->
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" />
+
+    <!-- Reduce z/FS overheads by reducing config and app polling -->
+    <config monitorInterval="5s" updateTrigger="polled" />
+    <applicationMonitor updateTrigger="disabled" dropins="dropins" 
+                        dropinsEnabled="false" pollingRate="5s" />
+                        
+
+    <!-- Db2 type 2 JDBC driver config, disable if using Db2 type 4 JDBC driver -->
+    <include location="db2/type2.xml"  onConflict="ignore" />
+
+    <!-- Db2 type 4 JDBC driver config, disable if using Db2 type 2 JDBC driver
+    <include location="db2/type4.xml"  onConflict="ignore" />
+    -->
+</server>
