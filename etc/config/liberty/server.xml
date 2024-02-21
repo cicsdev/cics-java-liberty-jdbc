@@ -4,8 +4,8 @@
 	<!-- Enable features -->
 	<featureManager>
 		<feature>cicsts:core-1.0</feature>
-		<feature>jsp-2.3</feature>
-		<feature>jdbc-4.1</feature>
+		<feature>servlet-5.0</feature>
+		<feature>jdbc-4.3</feature>
 	</featureManager>
 
     <!-- Default HTTP End Point -->
