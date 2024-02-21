@@ -1,6 +1,7 @@
 # cics-java-liberty-jdbc
-Sample JDBC Java EE web application demonstrating how to access a Db2 database from a web servlet in CICS Liberty. 
+[![Build](https://github.com/SoftlySplinter/cics-java-liberty-jdbc/actions/workflows/java.yaml/badge.svg?branch=cicsts%2Fv5.5)](https://github.com/SoftlySplinter/cics-java-liberty-jdbc/actions/workflows/java.yaml)
 
+Sample JDBC Java EE web application demonstrating how to access a Db2 database from a web servlet in CICS Liberty. 
 
 ## Contents
 This is a set of sample Java projects for database interaction in CICS Java, demonstrating how you can use JDBC in a WAR in a Liberty JVM server, to allow it query items in Db2.
