@@ -1,67 +1,158 @@
-cics-java-liberty-jdbc
-=====================
-
-Sample JDBC Java EE web application demonstrating how to access a DB2 database from a web servlet in CICS Liberty. 
+# cics-java-liberty-jdbc
+Sample JDBC Java EE web application demonstrating how to access a Db2 database from a web servlet in CICS Liberty. 
 
 
-## Repository structure
+## Contents
+This is a set of sample Java projects for database interaction in CICS Java, demonstrating how you can use JDBC in a WAR in a Liberty JVM server, to allow it query items in Db2.
 
-* [`projects/`](projects) - Eclipse projects suitable for importing into a CICS Explorer environment. 
-* [`etc/`](etc) - Liberty server configuration files
+This sample can use either Db2 type 2 or type 4 connectivity.
 
-## Samples overview
+* [`cics-java-liberty-jdbc-web`](cics-java-liberty-jdbc-web) - Dynamic web project containing the Java source.
+* [`java-java-liberty-jdbc-bundle`](cics-java-liberty-jdbc-bundle) - CICS bundle project (Gradle/Maven)
+* [`etc/config/liberty`](etc/config/liberty) - Liberty server configuration files
+* [`etc/eclipse_projects/com.ibm.cicsdev.jdbc.web.cicsbundle`](etc/eclipse_projects/com.ibm.cicsdev.jdbc.web.cicsbundle) - CICS bundle project (CICS Exp
 
-* `com.ibm.cicsdev.jdbc.web` - Dynamic web project containing the SimpleJDBCServlet servlet.  The servlet uses the DoJDBC class which connects 
-to DB2 by obtaining a DataSource via a JNDI lookup and returns the current timestamp from DB2
-* `com.ibm.cicsdev.jdbc.web.cicsbundle` - CICS bundle project that references the WAR (Dynamic web project) bundle part for deployment in a CICS bundle
+## Prerequisites
+* CICS TSf for z/OS V5.5
+* Java SE 8 or later on the z/OS system
+* CICS Explorer with the IBM CICS SDK for Java EE and Liberty feature installed [available here](https://developer.ibm.com/mainframe/products/downloads), Gradle, or Apache Maven.
+* IBM Db2 for z/OS
 
-## Pre-requisites
-* CICS TS V5.3 with APAR PI77502 or CICS TS V5.4 
-* Java SE 7 or later on the z/OS system
-* CICS Explorer V5.4 with the IBM CICS SDK for Java EE and Liberty feature installed [available here](https://developer.ibm.com/mainframe/products/downloads)
-* IBM Db2 for z/OS 
+## Downloading
+* Clone the repository using your IDEs support, such as the Eclipse Git plugin
+* or, download the sample as a ZIP and unzip onto the workstation
 
-## Configuration
-The sample code can be deployed as a WAR file into a CICS Liberty JVM server. CICS Liberty can be configured to use either a local DB2 database with 
-JDBC type 2 connectivity,  or a remote database with a JDBC type 4 connectivity. The SimpleJDBCServlet servlet can then be used to display the current 
-timestamp from DB2
+> [!Tip]
+> Eclipse Git provides an 'Import existing Projects' check-box when cloning a repository.
 
-### To import the samples into Eclipse
-1. Import the projects into CICS Explorer using **File -> Import -> General -> Existing projects into workspace**
-1. Resolve the build path errors on the Dynamic web project using the following menu from the web project: **Build Path -> Configure Build Path -> Libraries -> Add Library -> CICS with Java EE and Liberty** and select the version of CICS TS for deployment (either CICS TS V5.3 or CICS TS V5.4)
+### Check dependencies
+Before building this sample, you should verify that the correct CICS TS bill of materials (BOM) is specified for your target release of CICS. The BOM specifies a consistent set of artifacts, and adds information about their scope. In the example below the version specified is compatible with CICS TS V5.5 with JCICS APAR PH25409, or newer. That is, the Java byte codes built by compiling against this version of JCICS will be compatible with later CICS TS versions and subsequent JCICS APARs. 
+You can browse the published versions of the CICS BOM at [Maven Central.](https://mvnrepository.com/artifact/com.ibm.cics/com.ibm.cics.ts.bom)
+ 
+Gradle (build.gradle): 
 
-### To configure CICS for JDBC type 2 connectivity to DB2
-1. Create a Liberty JVM server as described in [4 easy steps](https://developer.ibm.com/cics/2015/06/04/starting-a-cics-liberty-jvm-server-in-4-easy-steps/)
-1. Update the CICS STEPLIB with the DB2 SDSNLOAD and SDSNLOD2 libraries
-1. Configure CICS DB2CONN, DB2TRAN and DB2ENTRY resource definitions as described in [How you can define the CICS DB2 connection](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/configuring/databases/dfhtk2c.html)
-1. Bind the DB2 plan that is specified in the CICS DB2CONN or DB2ENTRY definition with a PKLIST of NULLID.* 
-1. Add the following properties in the JVM profile to set the location of the DB2 drivers to allow CICS to automatically configure the default DataSource 
+`compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:5.5-20200519131930-PH25409")`
 
+Maven (POM.xml):
+
+``` xml	
+<dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.ibm.cics</groupId>
+        <artifactId>com.ibm.cics.ts.bom</artifactId>
+        <version>5.5-20200519131930-PH25409</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  ```
+
+## Building 
+
+You can build the sample using an IDE of your choice, or you can build it from the command line. For both approaches, using Gradle or Maven is the recommended way to get a consistent version of build tooling. 
+  
+For an IDE, taking Eclipse as an example, the plug-ins for Gradle *buildship* and Maven *m2e* will integrate with the "Run As..." capability, allowing you to specify a specific version of your chosen build tool.
+
+The required build-tasks are typically `clean build` for Gradle and `clean package` for Maven. Once run, Gradle will generate a WAR file in the `build/libs` directory, while Maven will generate it in the `target` directory.
+
+> [!NOTE]
+> If you import the project to your IDE, you might experience local project compile errors. To resolve these errors you should run a tooling refresh on that project. For example, in Eclipse: right-click on "Project", select "Gradle -> Refresh Gradle Project", **or** right-click on "Project", select "Maven -> Update Project...".
+
+> [!TIP]
+> In Eclipse, Gradle (buildship) is able to fully refresh and resolve the local classpath even if the project was previously updated by Maven. However, Maven (m2e) does not currently reciprocate that capability. If you previously refreshed the project with Gradle, you'll need to manually remove the 'Project Dependencies' entry on the Java build-path of your Project Properties to avoid duplication errors when performing a Maven Project Update.
+
+
+### Eclipse
+
+Import the projects into CICS Explorer using File &rarr; Import &rarr; General &rarr; Existing projects into workspace.
+> [!NOTE]
+> If using the egit client, you can just clone the repo and tick the button to import all projects.
+
+### Gradle (command line)
+
+Run the following in a local command prompt:
+
+```shell
+gradle clean build
 ```
--Dcom.ibm.cics.jvmserver.wlp.autoconfigure=true
--Dcom.ibm.cics.jvmserver.wlp.jdbc.driver.location=/usr/lpp/db2v12/jdbc
+
+This creates a WAR file inside the `cics-java-liberty-jdbc-app/build/libs` directory and a CICS bundle ZIP file inside the `cics-java-liberty-jdbc-bundle/build/distribution` directory.
+
+The JVM server the CICS bundle is targeted at is controlled through the `jvmserver` property, defined in the [`gradle.properties`](gradle.properties) file, or in the command line:
+
+```shell
+gradle clean build -Pjvmserver=MYJVMS
 ```
-Where  ```/usr/lpp/db2v12/jdbc``` is the location of the DB2 JDBC driver
 
-An example Liberty server configuration of a DataSource with a type 2 connection is supplied in [etc/config/type-2-server.xml](etc/config/type-2-server.xml). Configuration with DataSource and a type 4 connection is in [etc/config/type-4-server.xml](etc/config/type-4-server.xml)
+### Maven (command line)
 
-### To deploy the sample into a CICS region 
-1. Change the name of the JVMSERVER in the .warbundle file from DFHWLP to the name of the JVMSERVER resource defined in CICS. 
-1. Using the CICS Explorer export the ```com.ibm.cicsdev.jdbc.web.cicsbundle``` project to a zFS directory. 
-1. Define and install a CICS BUNDLE resource definition referring to the deployed bundle directory on zFS in step 2, and ensure all resources are enabled. 
+
+Run the following in a local command prompt:
+
+```shell
+mvn clean package
+```
+
+This creates a WAR file inside the `cics-java-liberty-jdbc-app/target` directory and a CICS bundle zIP file inside the `cics-java-liberty-jdbc-bundle/target` directory.
+
+The JVM server the CICS bundle is targeted at is controlled throught the `jvmserver` property, defined in [`cics-java-liberty-jdbc-bundle/pom.xml`](cics-java-liberty-jdbc-bundle/pom.xm) file under the `defaultjvmserver` configuration property.
+
+## Configuring
+
+### Configure Db2
+THis sample uses the [EMP table](https://www.ibm.com/docs/en/db2-for-zos/latest?topic=tables-employee-table-dsn8d10emp) provided with the [Db2 sample tables](https://www.ibm.com/docs/en/db2-for-zos/latest?topic=zos-db2-sample-tables).
+
+### Configure CICS for JDBC type 2 connectivity to Db2
+_If using Db2 type 2 connectivity to Db2_
+
+1. Update the CICS STEPLIB with the Db2 SDSNLOAD and SDSNLOD2 libraries
+2. Configure CICS DB2CONN, Db2TRAN and Db2ENTRY resource definitions as described in [How you can define the CICS Db2 connection](https://www.ibm.com/docs/en/cics-ts/latest?topic=sources-defining-cics-db2-connection).
+3. Bind the Db2 plan that is specified in the CICS DB2CONN or DB2ENTRY definition with a PKLIST of NULLID.*
+
+## Deploying to a Liberty JVM server
+
+Ensure you have the following features defined in your Liberty server.xml:
+* `jdbc-4.0` (or above)
+* If using Db2 type 2, add the following property to the JVM profile:
+  
+  ```
+  -Dcom.ibm.cics.jvmserver.wlp.jdbc.driver.location=/usr/lpp/db2v13/jdbc
+  ```
+A template server.xml is provided [here](etc/config/liberty/server.xml).
+
+### Deploying CICS Bundles with CICS Explorer
+1. Change the name of the JVMSERVER in the .warbundle file of the CICS bundle project from DFHWLP to the name of the JVMSERVER resource defined in CICS. 
+2. Export the bundle project to zFS by selecting 'Export Bundle project to z/OS Unix File System' from the context menu.
+3. Create a bundle definition, setting the bundle directory attribute to the zFS location you just exported to, and install it. 
+4. Check the CICS region for the dynamically created PROGRAM resource HELLOWLP using the Programs view in CICS Explorer, or the CEMT INQUIRE PROGRAM command.
+
+### Deploying CICS Bundles from Gradle or Maven
+1. Manually upload the ZIP file from the _cics-java-liberty-jdbc-bundle/target_ or _cics-java-liberty-jdbc-bundle/build/distributions_ directory to zFS.
+2. Unzip this ZIP file on zFS (e.g. `${JAVA_HOME}/bin/jar xf /path/to/bundle.zip`).
+3. Create a CICS BUNDLE resource definition, setting the bundle directory attribute to the zFS location you just extracted to, and install it into the CICS region. 
+4. Check the CICS region for the dynamically created PROGRAM resource HELLOWLP using the Programs view in CICS Explorer, or the CEMT INQUIRE PROGRAM command.
+
+### Deploying with Liberty configuration 
+1. Manually upload the WAR file from the _cics-java-liberty-jdbc-app/target_ or _cics-java-liberty-jdbc-app/build/libs_ directory to zFS.
+2. Add an `<application>` element to the Liberty server.xml to define the web application.
+3. Check the CICS region for the dynamically created PROGRAM resource HELLOWLP using the Programs view in CICS Explorer, or the CEMT INQUIRE PROGRAM command.
 
 ## Running the sample
-* The servlet is accessed with the following URL:
-[http://host:port/com.ibm.cicsdev.jdbc.web/](http://host:port/com.ibm.cicsdev.jdbc.web/)  
+The servlet is accessed with the following URL: [http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/database](http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/database).
 
-If the test is successful, you will see a response similar to the following written to the browser:  
+If the test is successful, you will see a response similar to the following written to the browser:
 
-`SimpleJDBCServlet: DB2 CurrentTimeStamp = 2017-08-02 11:28:46.18055`
+`Db2 current timestamp: 2024-01-01 09:30:00.000000.`
+
+If the EMP table is available, the full sample can be accessed with the following URL: [http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/](http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/). This is a HTML page that communicates with a servlet backend to display the employees in the EMP table.
+
 
 ## Reference
 *  Sample SQLJ Git repository  [cics-java-liberty-sqlj](https://github.com/cicsdev/cics-java-liberty-sqlj)
-*  CICS Knowledge Center [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.4.0/configuring/java/config_jvmserver_liberty.html)
-*  CICS Knowledge Center [Configuring a JVM server to support DB2](https://www.ibm.com/support/knowledgecenter/en/SSGMCP_5.4.0/applications/developing/database/dfhtk4b.html)
+*  CICS Knowledge Center [Configuring a Liberty JVM server](https://www.ibm.com/docs/en/cics-ts/latest?topic=server-configuring-liberty-jvm)
+*  CICS Knowledge Center [Configuring a JVM server to support Db2](https://www.ibm.com/docs/en/cics-ts/latest?topic=programs-configuring-jvm-server-support-db2)
 
 ## License
 This project is licensed under [Apache License Version 2.0](LICENSE).
