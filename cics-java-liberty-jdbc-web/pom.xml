@@ -17,6 +17,16 @@
   <name>CICS Liberty JDBC Application - Web</name>
   <description>This module exposes information from Db2 in a servlet.</description>
 
+  <build>
+    <plugins>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.4.0</version>
+      </plugin>
+    </plugins>
+  </build>
+
   <dependencies>
     <dependency>
       <groupId>jakarta.servlet</groupId>

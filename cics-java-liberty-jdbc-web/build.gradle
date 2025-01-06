@@ -27,17 +27,6 @@ repositories
 }
 
 
-java
-{
-    toolchain
-    {
-        languageVersion = JavaLanguageVersion.of(java_version)
-        vendor = JvmVendorSpec.IBM
-        implementation = JvmImplementation.J9
-    }
-}
-
-
 dependencies 
 {
     compileOnly 'jakarta.servlet:jakarta.servlet-api:5.0.0'
