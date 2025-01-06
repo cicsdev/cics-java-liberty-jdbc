@@ -81,10 +81,10 @@ gradle clean build
 
 This creates a WAR file inside the `cics-java-liberty-jdbc-app/build/libs` directory and a CICS bundle ZIP file inside the `cics-java-liberty-jdbc-bundle/build/distribution` directory.
 
-The JVM server the CICS bundle is targeted at is controlled through the `jvmserver` property, defined in the [`gradle.properties`](gradle.properties) file, or in the command line:
+The JVM server the CICS bundle is targeted at is controlled through the `cics.jvmserver` property, or in the command line:
 
 ```shell
-gradle clean build -Pjvmserver=MYJVMS
+gradle clean build -Pcics.jvmserver=MYJVMS
 ```
 
 ### Maven (command line)
@@ -93,12 +93,12 @@ gradle clean build -Pjvmserver=MYJVMS
 Run the following in a local command prompt:
 
 ```shell
-mvn clean package
+mvn clean verify
 ```
 
 This creates a WAR file inside the `cics-java-liberty-jdbc-app/target` directory and a CICS bundle zIP file inside the `cics-java-liberty-jdbc-bundle/target` directory.
 
-The JVM server the CICS bundle is targeted at is controlled throught the `jvmserver` property, defined in [`cics-java-liberty-jdbc-bundle/pom.xml`](cics-java-liberty-jdbc-bundle/pom.xm) file under the `defaultjvmserver` configuration property.
+The JVM server the CICS bundle is targeted at is controlled throught the `cics.jvmserver` property, defined in [`cics-java-liberty-jdbc-bundle/pom.xml`](cics-java-liberty-jdbc-bundle/pom.xm) file under the `defaultjvmserver` configuration property.
 
 ## Configuring
 
