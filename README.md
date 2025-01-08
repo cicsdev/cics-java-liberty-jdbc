@@ -52,11 +52,9 @@ Maven (POM.xml):
 
 ## Building 
 
-You can build the sample using an IDE of your choice, or you can build it from the command line. For both approaches, using Gradle or Maven is the recommended way to get a consistent version of build tooling. 
+You can build the sample using an IDE of your choice, or you can build it from the command line. For both approaches, using the Gradle or Maven wrappers will give a consistent version of build tooling. 
   
 For an IDE, taking Eclipse as an example, the plug-ins for Gradle *buildship* and Maven *m2e* will integrate with the "Run As..." capability, allowing you to specify a specific version of your chosen build tool.
-
-The required build-tasks are typically `clean build` for Gradle and `clean package` for Maven. Once run, Gradle will generate a WAR file in the `build/libs` directory, while Maven will generate it in the `target` directory.
 
 > [!NOTE]
 > If you import the project to your IDE, you might experience local project compile errors. To resolve these errors you should run a tooling refresh on that project. For example, in Eclipse: right-click on "Project", select "Gradle -> Refresh Gradle Project", **or** right-click on "Project", select "Maven -> Update Project...".
@@ -71,34 +69,31 @@ Import the projects into CICS Explorer using File &rarr; Import &rarr; General &
 > [!NOTE]
 > If using the egit client, you can just clone the repo and tick the button to import all projects.
 
-### Gradle (command line)
+### Building with Gradle
 
-Run the following in a local command prompt:
+A WAR file is created inside the `cics-java-liberty-jdbc-app/build/libs` directory and a CICS bundle ZIP file inside the `cics-java-liberty-jdbc-bundle/build/distribution` directory.
 
-```shell
-gradle clean build
-```
+The JVM server the CICS bundle is targeted at is controlled through the `cics.jvmserver` property, or in the command line.
 
-This creates a WAR file inside the `cics-java-liberty-jdbc-app/build/libs` directory and a CICS bundle ZIP file inside the `cics-java-liberty-jdbc-bundle/build/distribution` directory.
+| Tool | Command |
+| ----------- | ----------- |
+| Gradle Wrapper (Linux/Mac) | ```./gradlew clean build``` |
+| Gradle Wrapper (Windows) | ```gradle.bat clean build``` |
+| Gradle (command-line) | ```gradle clean build``` |
+| Gradle (command-line & setting jvmserver) | ```gradle clean build -Pcics.jvmserver=MYJVM``` |
 
-The JVM server the CICS bundle is targeted at is controlled through the `cics.jvmserver` property, or in the command line:
+### Building with Maven
 
-```shell
-gradle clean build -Pcics.jvmserver=MYJVMS
-```
+A WAR file is created inside the `cics-java-liberty-jdbc-app/target` directory and a CICS bundle ZIP file inside the `cics-java-liberty-jdbc-bundle/target` directory.
 
-### Maven (command line)
+The JVM server the CICS bundle is targeted at is controlled throught the `cics.jvmserver` property, defined in [`cics-java-liberty-jdbc-bundle/pom.xml`](cics-java-liberty-jdbc-bundle/pom.xm) file under the `defaultjvmserver` configuration property, or in the command line.
 
-
-Run the following in a local command prompt:
-
-```shell
-mvn clean verify
-```
-
-This creates a WAR file inside the `cics-java-liberty-jdbc-app/target` directory and a CICS bundle zIP file inside the `cics-java-liberty-jdbc-bundle/target` directory.
-
-The JVM server the CICS bundle is targeted at is controlled throught the `cics.jvmserver` property, defined in [`cics-java-liberty-jdbc-bundle/pom.xml`](cics-java-liberty-jdbc-bundle/pom.xm) file under the `defaultjvmserver` configuration property.
+| Tool | Command |
+| ----------- | ----------- |
+| Maven Wrapper (Linux/Mac) | ```./mvnw clean verify``` |
+| Maven Wrapper (Windows) | ```mvnw.cmd clean verify``` |
+| Maven (command-line) | ```mvn clean verify``` |
+| Maven (command-line & setting jvmserver) | ```mvn clean verify -Dcics.jvmserver=MYJVM``` |
 
 ## Configuring
 
