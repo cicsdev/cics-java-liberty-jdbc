@@ -15,6 +15,12 @@ Sample JDBC Java EE web application demonstrating how to access a DB2 database f
 to DB2 by obtaining a DataSource via a JNDI lookup and returns the current timestamp from DB2
 * `com.ibm.cicsdev.jdbc.web.cicsbundle` - CICS bundle project that references the WAR (Dynamic web project) bundle part for deployment in a CICS bundle
 
+## Versions
+| CICS TS for z/OS Version | Branch                                 | Minimum Java Version | Build Status |
+|--------------------------|----------------------------------------|----------------------|--------------|
+| 5.5, 5.6                 | [cicsts/v5.5](/../../tree/cicsts/v5.5) | 8                    | [![Build](https://github.com/cicsdev/cics-java-liberty-jdbc/actions/workflows/java.yaml/badge.svg?branch=cicsts%2Fv5.5)](https://github.com/cicsdev/cics-java-liberty-jdbc/actions/workflows/java.yaml) |
+| 6.1                      | [cicsts/v6.1](/../../tree/cicsts/v6.1) | 8                    | [![Build](https://github.com/cicsdev/cics-java-liberty-jdbc/actions/workflows/java.yaml/badge.svg?branch=cicsts%2Fv6.1)](https://github.com/cicsdev/cics-java-liberty-jdbc/actions/workflows/java.yaml) |
+
 ## Pre-requisites
 * CICS TS V5.3 with APAR PI77502 or CICS TS V5.4 
 * Java SE 7 or later on the z/OS system
