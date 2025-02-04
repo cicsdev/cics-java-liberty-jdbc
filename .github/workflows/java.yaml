@@ -16,11 +16,11 @@ jobs:
       - uses: actions/checkout@v3
       - name: Check Copyright
         env:
-          EXTENSIONS: "*.java"
+          EXTENSIONS: "*.java, *.js"
           COPYRIGHT_STATEMENT: "/**\n * Copyright IBM Corp. 2024\n */"
         run: |
           for ext in $EXTENSIONS; do
-            for file in $(find . -type f -name "$ext" ! -path "cics-java-liberty-jdbc/*"); do
+            for file in $(find . -type f -name "$ext" ! -path "cics-java-liberty-jdbc-web/*"); do
               if ! grep -q "Copyright" "$file"; then
                 echo -e "$COPYRIGHT_STATEMENT\n$(cat "$file")" > "$file"
               fi
