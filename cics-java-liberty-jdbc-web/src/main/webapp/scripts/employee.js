@@ -31,8 +31,7 @@ async function loadEmployees() {
         }
 
         const employees = await response.text();
-        employees.split("
-")
+        employees.split("\n")
             .map(processEmployee)
             .forEach(addEmployee);
     } catch (error) {
