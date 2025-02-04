@@ -1,3 +1,6 @@
+/**
+ * Copyright IBM Corp. 2024
+ */
 /** The information element */
 const information = document.getElementById("information");
 const errorMessage = document.getElementById("error");
