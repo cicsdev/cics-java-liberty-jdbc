@@ -75,12 +75,22 @@ A WAR file is created inside the `cics-java-liberty-jdbc-app/build/libs` directo
 
 The JVM server the CICS bundle is targeted at is controlled through the `cics.jvmserver` property, or in the command line.
 
-| Tool | Command |
-| ----------- | ----------- |
-| Gradle Wrapper (Linux/Mac) | ```./gradlew clean build``` |
-| Gradle Wrapper (Windows) | ```gradle.bat clean build``` |
-| Gradle (command-line) | ```gradle clean build``` |
-| Gradle (command-line & setting jvmserver) | ```gradle clean build -Pcics.jvmserver=MYJVM``` |
+**Gradle Wrapper (Linux/Mac):**
+```shell
+./gradlew clean build
+```
+**Gradle Wrapper (Windows):**
+```shell
+gradle.bat clean build
+```
+**Gradle (command-line):**
+```shell
+gradle clean build
+```
+**Gradle (command-line & setting jvmserver):**
+```shell
+gradle clean build -Pcics.jvmserver=MYJVM
+```
 
 ### Building with Maven
 
@@ -88,12 +98,22 @@ A WAR file is created inside the `cics-java-liberty-jdbc-app/target` directory a
 
 The JVM server the CICS bundle is targeted at is controlled throught the `cics.jvmserver` property, defined in [`cics-java-liberty-jdbc-bundle/pom.xml`](cics-java-liberty-jdbc-bundle/pom.xm) file under the `defaultjvmserver` configuration property, or in the command line.
 
-| Tool | Command |
-| ----------- | ----------- |
-| Maven Wrapper (Linux/Mac) | ```./mvnw clean verify``` |
-| Maven Wrapper (Windows) | ```mvnw.cmd clean verify``` |
-| Maven (command-line) | ```mvn clean verify``` |
-| Maven (command-line & setting jvmserver) | ```mvn clean verify -Dcics.jvmserver=MYJVM``` |
+**Maven Wrapper (Linux/Mac):**
+```shell
+./mvnw clean verify
+```
+**Maven Wrapper (Windows):**
+```shell
+mvnw.cmd clean verify
+```
+**Maven (command-line):**
+```shell
+mvn clean verify
+```
+**Maven (command-line & setting jvmserver):**
+```shell
+mvn clean verify -Dcics.jvmserver=MYJVM
+```
 
 ## Configuring
 
