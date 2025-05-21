@@ -28,16 +28,16 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>com.ibm.cics</groupId>
-                <artifactId>cics-bundle-maven-plugin</artifactId>
-                <version>1.0.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <defaultjvmserver>${cics.jvmserver}</defaultjvmserver>
-                </configuration>
-            </plugin>
-        </plugins>
+	    <plugins>
+	      <plugin>
+	        <groupId>com.ibm.cics</groupId>
+	        <artifactId>cics-bundle-maven-plugin</artifactId>
+	        <version>1.0.7</version>
+	        <extensions>true</extensions>
+	        <configuration>
+	            <defaultjvmserver>${cics.jvmserver}</defaultjvmserver>
+	        </configuration>
+	      </plugin>
+	    </plugins>
     </build>
 </project>
