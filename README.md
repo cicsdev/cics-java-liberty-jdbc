@@ -156,13 +156,13 @@ A template server.xml is provided [here](etc/config/liberty/server.xml).
 3. Check the CICS region for the dynamically created PROGRAM resource HELLOWLP using the Programs view in CICS Explorer, or the CEMT INQUIRE PROGRAM command.
 
 ## Running the sample
-The servlet is accessed with the following URL: [http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/database](http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/database).
+The servlet is accessed with the following URL: [http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/database](http://zos.example.com:9080/cics-java-liberty-jdbc-web/database).
 
 If the test is successful, you will see a response similar to the following written to the browser:
 
 `Db2 current timestamp: 2024-01-01 09:30:00.000000.`
 
-If the EMP table is available, the full sample can be accessed with the following URL: [http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/](http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/). This is a HTML page that communicates with a servlet backend to display the employees in the EMP table.
+If the EMP table is available, the full sample can be accessed with the following URL: [http://zos.example.com:9080/com.ibm.cicsdev.jdbc.web/](http://zos.example.com:9080/cics-java-liberty-jdbc-web/). This is a HTML page that communicates with a servlet backend to display the employees in the EMP table.
 
 
 ## Reference
