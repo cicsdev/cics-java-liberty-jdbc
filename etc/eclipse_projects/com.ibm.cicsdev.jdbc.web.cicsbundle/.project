@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>com.ibm.cics.server.examples.osgi.jdbc.bundle</name>
+	<name>com.ibm.cics.server.examples.wlp.jdbc.bundle</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -10,7 +10,7 @@
 			<arguments>
 				<dictionary>
 					<key>bundleID</key>
-					<value>com.ibm.cicsdev.jdbc.web.cicsbundle</value>
+					<value>com.ibm.cics.server.examples.wlp.jdbc.bundle</value>
 				</dictionary>
 				<dictionary>
 					<key>majorVersion</key>
