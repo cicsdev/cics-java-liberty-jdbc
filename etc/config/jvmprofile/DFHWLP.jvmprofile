@@ -33,3 +33,4 @@ _BPXK_DISABLE_SHLIB=YES
 
 # Define the Db2 type 2 driver (if using Db2 type 2)
 -Dcom.ibm.cics.jvmserver.wlp.jdbc.driver.location=/usr/lpp/db2v13/jdbc
+-Ddb2.jcc.override.currentSchema=DBADMIN
