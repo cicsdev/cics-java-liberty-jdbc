@@ -15,8 +15,8 @@ This sample can use either Db2 type 2 or type 4 connectivity.
 * CICS TS V6.1 or later
 * A connected CICS DB2CONN resource. For more information, see [CONFIGURING](#configuring)
 * A Liberty JVM server
-* Java SE 1.8 or later on the workstation
-* IBM Db2 V11 or later on z/OS
+* Java SE 17 or later on the workstation
+* IBM Db2 V13 or later on z/OS
 
 ## Downloading
 
