@@ -12,7 +12,7 @@
 # Copyright IBM Corp. 2012, 2023                                      #
 #                                                                     #
 #######################################################################
-JAVA_HOME=/usr/lpp/java/J8.0_64/
+JAVA_HOME=/java/java17_64
 WORK_DIR=.
 
 WLP_INSTALL_DIR=&USSHOME;/wlp
@@ -33,3 +33,4 @@ _BPXK_DISABLE_SHLIB=YES
 
 # Define the Db2 type 2 driver (if using Db2 type 2)
 -Dcom.ibm.cics.jvmserver.wlp.jdbc.driver.location=/usr/lpp/db2v13/jdbc
+-Ddb2.jcc.override.currentSchema=DBADMIN

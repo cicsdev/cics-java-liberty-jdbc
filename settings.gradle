@@ -1,4 +1,4 @@
-rootProject.name = 'com.ibm.cicsdev.springboot.jdbc'
+rootProject.name = 'cics-java-liberty-jdbc'
 
 include(':cics-java-liberty-jdbc-web')
 include(':cics-java-liberty-jdbc-bundle')
