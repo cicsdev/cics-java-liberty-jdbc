@@ -134,7 +134,7 @@ Configure the JVM profile of the Liberty JVM server to include the Db2 driver lo
 As an example, see the provided [JVM profile template](etc/config/jvmprofile/DFHWLP.jvmprofile). If necessary, restart the JVM server.
 
 Ensure you have the following feature defined in your Liberty server.xml:
-* `jdbc-4.0`
+* `jdbc-4.1`
 
 A template server.xml is provided [here](./etc/config/liberty/server.xml).
 
