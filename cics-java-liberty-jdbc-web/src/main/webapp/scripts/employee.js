@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corp. 2024
+ * Copyright IBM Corp. 2024, 2025
  */
 /** The information element */
 const information = document.getElementById("information");
