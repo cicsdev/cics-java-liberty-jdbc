@@ -1,0 +1,55 @@
+plugins
+{
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'war'
+}
+
+group = 'com.ibm.cicsdev'
+version = '1.0.0'
+
+java
+{
+    toolchain
+    {
+        languageVersion = JavaLanguageVersion.of(java_version)
+    }
+}
+
+// If in Eclipse, add Javadoc to the local project classpath and pin WTP context root/facet
+eclipse
+{
+    classpath
+    {
+        downloadJavadoc = true
+    }
+    // Ensures Gradle Refresh sets the WTP context-root and web facet version correctly.
+    wtp
+    {
+        facet
+        {
+            facet name: 'jst.web', version: '5.0'
+        }
+        component
+        {
+            contextPath = 'cics-java-liberty-jdbc'
+        }
+    }
+}
+
+repositories
+{
+    mavenCentral()
+}
+
+war
+{
+    archiveFileName = 'cics-java-liberty-jdbc.war'
+}
+
+dependencies
+{
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:5.0.0'
+    compileOnly 'jakarta.annotation:jakarta.annotation-api:2.0.0'
+}
