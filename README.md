@@ -20,13 +20,12 @@ The sample uses the Jakarta EE 9 Servlet API and is targeted for deployment in a
 2. [Prerequisites](#prerequisites)
 3. [Reference](#reference)
 4. [Downloading](#downloading)
-5. [Check dependencies](#check-dependencies)
-6. [Building the Sample](#building-the-sample)
-7. [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server)
-8. [Running the Sample](#running-the-sample)
-9. [Additional Resources](#additional-resources)
-10. [License](#license)
-11. [Contributing](#contributing)
+5. [Building the Sample](#building-the-sample)
+6. [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server)
+7. [Running the Sample](#running-the-sample)
+8. [Additional Resources](#additional-resources)
+9. [License](#license)
+10. [Contributing](#contributing)
 
 ## Prerequisites
 
