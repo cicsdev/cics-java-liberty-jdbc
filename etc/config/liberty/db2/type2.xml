@@ -2,7 +2,8 @@
 <server description="Db2 type 2 JDBC driver template configuration">
 
 	<!-- DataSource with type 2 JDBC driver -->
-	<dataSource id="db2Type2JdbcDataSource" jndiName="jdbc/defaultCICSDataSource" transactional="false">
+	<dataSource id="db2Type2JdbcDataSource" jndiName="jdbc/defaultCICSDataSource" type="javax.sql.DataSource"
+	 transactional="false">
 		<jdbcDriver libraryRef="db2Type2JdbcLibrary"/>
 		<properties.db2.jcc driverType="2"/>
 		<connectionManager agedTimeout="0"/>
