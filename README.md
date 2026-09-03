@@ -1,217 +1,249 @@
 # cics-java-liberty-jdbc
-This sample demonstrates how to code, build, and deploy a CICS Java application that makes JDBC calls to Db2 from a web servlet in CICS Liberty. It makes use of the employee sample table supplied with Db2 for z/OS, and allows you to display employee information from the table EMP.
+[![Build](https://github.com/cicsdev/cics-java-liberty-jdbc/actions/workflows/build.yaml/badge.svg)](https://github.com/cicsdev/cics-java-liberty-jdbc/actions/workflows/build.yaml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-## Contents
-This is a set of sample Java projects for database interaction in CICS Java, demonstrating how you can use JDBC in a WAR in a Liberty JVM server, to allow it query items in Db2.
+## Overview
 
-This sample can use either Db2 type 2 or type 4 connectivity.
+This sample demonstrates how to code, build, and deploy a CICS Java application that makes JDBC calls to Db2 from a web servlet running in a CICS Liberty JVM server. It uses the employee sample table (`EMP`) supplied with Db2 for z/OS, and allows you to display and query employee information.
 
-* [`cics-java-liberty-jdbc-web`](cics-java-liberty-jdbc-web) - Dynamic web project containing the Java source.
-* [`java-java-liberty-jdbc-bundle`](cics-java-liberty-jdbc-bundle) - CICS bundle plug-in based project, contains Web application bundle-parts. Use with Gradle and Maven builds.
-* [`etc/config/liberty`](etc/config/liberty) - Liberty server configuration files
-* [`etc/eclipse_projects/com.ibm.cics.server.examples.wlp.jdbc.bundle`](etc/eclipse_projects/com.ibm.cics.server.examples.wlp.jdbc.bundle) - CICS bundle project (CICS Explorer based CICS bundle project, contains Web application bundle-parts. Use with CICS Explorer 'Export to zFS' deployment capability.)
+The sample uses the Jakarta EE 9 Servlet API and is targeted for deployment in a CICS TS V6.1 Liberty JVM server. It supports both Db2 type 2 and type 4 connectivity.
 
-## Requirements
-* CICS TS V6.1 or later
-* A connected CICS DB2CONN resource. For more information, see [CONFIGURING](#configuring)
-* A Liberty JVM server
-* Java SE 17 or later on the workstation
-* IBM Db2 V13 or later on z/OS
+**Key Features:**
+- Demonstrates JDBC connectivity to Db2 for z/OS from a Liberty JVM server
+- Supports both Db2 type 2 (local) and type 4 (network) JDBC drivers
+- Provides a REST-style servlet that queries the Db2 `EMP` sample table
+- Includes a simple HTML front-end for browsing employee records
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Prerequisites](#prerequisites)
+3. [Reference](#reference)
+4. [Downloading](#downloading)
+5. [Building the Sample](#building-the-sample)
+6. [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server)
+7. [Running the Sample](#running-the-sample)
+8. [Additional Resources](#additional-resources)
+9. [License](#license)
+10. [Contributing](#contributing)
+
+## Prerequisites
+
+- CICS TS V6.1 or later
+- A configured Liberty JVM server in CICS
+- Java SE 17 or later on the workstation
+- Eclipse with the IBM CICS SDK for Java EE, Jakarta EE and Liberty (optional)
+- Gradle or Apache Maven on the workstation (optional — wrappers are supplied)
+- IBM Db2 V13 or later on z/OS with the `EMP` sample table
+- A connected CICS `DB2CONN` resource (see [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server))
+
+## Reference
+
+- Sample SQLJ Git repository: [cics-java-liberty-sqlj](https://github.com/cicsdev/cics-java-liberty-sqlj)
+- CICS Knowledge Center: [Configuring a Liberty JVM server](https://www.ibm.com/docs/en/cics-ts/latest?topic=server-configuring-liberty-jvm)
+- CICS Knowledge Center: [Configuring a JVM server to support Db2](https://www.ibm.com/docs/en/cics-ts/latest?topic=programs-configuring-jvm-server-support-db2)
 
 ## Downloading
 
-- Clone the repository using your IDEs support, such as the Eclipse Git plugin
-- **or**, download the sample as a [ZIP](https://github.com/cicsdev/cics-java-liberty-jdbc/archive/cicsts/v6.1.zip) and unzip onto the workstation
+**If using Eclipse:** the simplest approach is to clone the repository using the Eclipse Git plugin (EGit) perspective.
 
-> [!TIP]
-> Eclipse Git provides an 'Import existing Projects' check-box when cloning a repository.
+**If using the command line:**
+```shell
+git clone https://github.com/cicsdev/cics-java-liberty-jdbc
+```
+Alternatively, download the sample as a [ZIP](https://github.com/cicsdev/cics-java-liberty-jdbc/archive/main.zip) and unzip onto the workstation.
 
+**If importing into Eclipse:**
+1. In the **Git Repositories** view, right-click the repository → **Import as Project**
+   *(if you cloned from the command line, use **File → Import → Existing Projects into Workspace** instead, browse to the cloned directory, select all projects)*
+2. Switch to the **Java EE** perspective
+3. In the **Project Explorer**, right-click the `cics-java-liberty-jdbc-app` folder → **Import as Project**
+4. Right-click the `cics-java-liberty-jdbc-cicsbundle` folder → **Import as Project**
+5. Right-click the `cics-java-liberty-jdbc-cicsbundle-eclipse` folder → **Import as Project**
+6. **Required:** Right-click the root project → **Gradle → Refresh Gradle Project** or **Maven → Update Project...** — this resolves CICS and framework dependencies into the project classpath.
 
-## Building 
+**Package `com.ibm.cicsdev.liberty.jdbc`**
+- [`DatabaseService`](cics-java-liberty-jdbc-app/src/main/java/com/ibm/cicsdev/liberty/jdbc/DatabaseService.java) — obtains a JDBC connection and runs a timestamp query
+- [`DatabaseServlet`](cics-java-liberty-jdbc-app/src/main/java/com/ibm/cicsdev/liberty/jdbc/DatabaseServlet.java) — servlet that returns the current Db2 timestamp
 
-You can build the sample in a variety of ways:
-- Using the implicit compile/build of the Eclipse based CICS Explorer SDK
-- Using the built-in Gradle or Maven support of your IDE (For example: *buildship* or *m2e* in Eclipse which integrate with the "Run As..." menu.)
-- Using the supplied Gradle or Maven Wrapper scripts (no requirement for an IDE or Gradle/Maven install)
-- or you can build it from the command line if you have Gradle or Maven installed on your workstation
-  
+**Package `com.ibm.cicsdev.liberty.jdbc.employee`**
+- [`Employee`](cics-java-liberty-jdbc-app/src/main/java/com/ibm/cicsdev/liberty/jdbc/employee/Employee.java) — model class for an employee record
+- [`EmployeeService`](cics-java-liberty-jdbc-app/src/main/java/com/ibm/cicsdev/liberty/jdbc/employee/EmployeeService.java) — queries the `EMP` table via JDBC
+- [`EmployeeServlet`](cics-java-liberty-jdbc-app/src/main/java/com/ibm/cicsdev/liberty/jdbc/employee/EmployeeServlet.java) — servlet that returns employee data as JSON
 
-> [!IMPORTANT]
-> The sample comes pre-configured for use with a JDK 17 and CICS TS V6.1 Libraries for Jakarta EE 9. When you initially import the project to your IDE, if your IDE is not configured for a JDK 17, or does not have CICS Explorer SDK installed, you might experience local project compile errors. To resolve issues you should configure the Project's build-path to add/remove your preferred combination of CICS TS, JDK, and Liberty's Enterprise Java libraries (Java EE or Jakarta EE). Resolving errors might also depend on how you wish to build and deploy the sample. If you are building and deploying through CICS Explorer SDK and 'Export to zFS' you should edit the link-app's Project properties. Select 'Java Build Path', on the Libraries tab select 'Classpath', click 'Add Library', select 'CICS with Enterprise Java and Liberty' Library, and choose the appropriate CICS and Enterprise Java versions.
-If you are building and deploying with Gradle or Maven then you don't necessarily need to fix the local errors, but to do so, you can do as above, or you can run a tooling refresh on the jdbc-web project. For example, in Eclipse: right-click on "Project", select "Gradle -> Refresh Gradle Project", **or** right-click on "Project", select "Maven -> Update Project...".
+**Supporting files:**
+- [`etc/config/liberty/server.xml`](etc/config/liberty/server.xml) — Liberty server template
+- [`etc/config/jvmprofile/DFHWLP.jvmprofile`](etc/config/jvmprofile/DFHWLP.jvmprofile) — JVM profile template
 
-> [!TIP]
-> In Eclipse, Gradle (buildship) is able to fully refresh and resolve the local classpath even if the project was previously updated by Maven. However, Maven (m2e) does not currently reciprocate that capability. If you previously refreshed the project with Gradle, you'll need to manually remove the 'Project Dependencies' entry on the Java build-path of your Project Properties to avoid duplication errors when performing a Maven Project Update.
+## Building the Sample
 
+You can build the sample using an IDE of your choice, or from the command line. Using the supplied Gradle or Maven wrapper is the recommended approach to get a consistent build tool version.
 
+The required build tasks are `clean build` for Gradle and `clean verify` for Maven. Gradle generates a WAR file in `cics-java-liberty-jdbc-app/build/libs`; Maven generates it in `cics-java-liberty-jdbc-app/target`.
 
-### Option 1: Building with Eclipse
+### Gradle Wrapper (command line)
 
-If you are using the Egit client to clone the repo, remember to tick the button to import all projects. Otherwise, you should manually Import the projects into CICS Explorer using File &rarr; Import &rarr; General &rarr; Existing projects into workspace, then follow the error resolution advice above.
+On Linux or Mac:
 
-### Option 2: Building with Gradle
-
-For a complete build you should run the settings.gradle file in the top-level 'cics-java-liberty-jdbc' directory which is designed to invoke the individual build.gradle files for each project. 
-
-If successful, a WAR file is created inside the `cics-java-liberty-jdbc-web/build/libs` directory and a CICS bundle ZIP file inside the `cics-java-liberty-jdbc-bundle/build/distribution` directory. 
-
-[!NOTE]
-In Eclipse, the output 'build' directory is often hidden by default. From the Package Explorer pane, select the three dot menu, choose filters and un-check the Gradle build folder to view its contents.
-
-The JVM server the CICS bundle is targeted at is controlled through the `cics.jvmserver` property, defined in the [`cics-java-liberty-jdbc-bundle/build.gradle`](cics-java-liberty-jdbc-bundle/build.gradle) file, or alternatively can be set on the command line:
-
-**Gradle Wrapper (Linux/Mac):**
 ```shell
 ./gradlew clean build
 ```
-**Gradle Wrapper (Windows):**
+
+On Windows:
+
 ```shell
-gradle.bat clean build
-```
-**Gradle (command-line):**
-```shell
-gradle clean build
-```
-**Gradle (command-line & setting jvmserver):**
-```shell
-gradle clean build -Pcics.jvmserver=MYJVM
+gradlew.bat clean build
 ```
 
-### Option 3: Building with Apache Maven
+This creates a WAR file inside the `cics-java-liberty-jdbc-app/build/libs` directory.
 
-For a complete build you should run the pom.xml file in the top-level 'cics-java-liberty-jdbc' directory. A WAR file is created inside the `cics-java-liberty-jdbc-web/target` directory and a CICS bundle ZIP file inside the `cics-java-liberty-jdbc-bundle/target` directory.
+> **Note:** In Eclipse, the `build` directory may be hidden by default. To view it: **Package Explorer → ⋮ → Filters and Customization → uncheck "Gradle build folder"**.
 
-If building a CICS bundle ZIP the CICS JVM server name for the WAR bundle part should be modified in the 
- `cics.jvmserver` property, defined in [`cics-java-liberty-jdbc-bundle/pom.xml`](cics-java-liberty-jdbc-bundle/pom.xml) file under the `defaultjvmserver` configuration property, or alternatively can be set on the command line.
+### Maven Wrapper (command line)
 
-**Maven Wrapper (Linux/Mac):**
+On Linux or Mac:
+
 ```shell
 ./mvnw clean verify
 ```
-**Maven Wrapper (Windows):**
+
+On Windows:
+
 ```shell
 mvnw.cmd clean verify
 ```
-**Maven (command-line):**
-```shell
-mvn clean verify
-```
-**Maven (command-line & setting jvmserver):**
-```shell
-mvn clean verify -Dcics.jvmserver=MYJVM
-```
 
-## Configuring
+This creates a WAR file inside the `cics-java-liberty-jdbc-app/target` directory.
+
+### Building with Eclipse (IDE)
+
+Once imported (see [Downloading](#downloading)), use the IDE's built-in Gradle or Maven integration:
+
+**With Gradle (Buildship):**
+1. Right-click the root project → **Run As → Gradle Build...**
+2. Enter `clean build` in the Gradle Tasks field → **Run**
+3. After the build completes, right-click the root project → **Gradle → Refresh Gradle Project**
+
+**With Maven (m2e):**
+1. Right-click the root project → **Maven → Update Project...** → check **Force Update of Snapshots/Releases** → **OK**
+2. Right-click the root project → **Run As → Maven build...** → enter `clean verify` → **Run**
+
+## Deploying to a CICS Liberty JVM server
 
 ### Configure CICS for Db2
-To allow your CICS region to connect to DB2, we need to add some configuration to the JCL.
 
-```
-//  SET DB2=V13                           - DB2 Version
-...
-<variables>
-...
-DB2CONN=YES
-
-//STEPLIB
-...
-//         DD DISP=SHR,DSN=SYS2.DB2.&DB2..SDSNLOAD
-//         DD DISP=SHR,DSN=SYS2.DB2.&DB2..SDSNLOD2
-```
-
-### Configure the Liberty with DB2
-This sample uses the [EMP table](https://www.ibm.com/docs/en/db2-for-zos/latest?topic=tables-employee-table-dsn8d10emp) provided with the [Db2 sample tables](https://www.ibm.com/docs/en/db2-for-zos/latest?topic=zos-db2-sample-tables).
-Configure the JVM profile of the Liberty JVM server to include the Db2 driver location.
-> [!TIP]
-> There are several options to configuring the database schema. The following config defines the schema in the JVM profile, however, the schema can be defined directly in the datasource in the server.xml in the datasource properties element. Or it can be defined in the application code itself once setting a connection. 
-
-> Note: The name of your JVM profile is assumed to be 'DFHWLP'
+Configure the JVM profile of the Liberty JVM server to include the Db2 driver location:
 
 ```
 -Dcom.ibm.cics.jvmserver.wlp.jdbc.driver.location=/usr/lpp/db2v13/jdbc
 -Ddb2.jcc.override.currentSchema=DBADMIN
 ```
-> Note: This example is using db2v13, this version must be consistent to the version set in your JCL.
 
-As an example, see the provided [JVM profile template](etc/config/jvmprofile/DFHWLP.jvmprofile). If necessary, restart the JVM server.
+See the provided [JVM profile template](etc/config/jvmprofile/DFHWLP.jvmprofile). Restart the JVM server after changes.
 
-Ensure you have the following feature defined in your Liberty server.xml:
-* `jdbc-4.3`
+Ensure the following feature is defined in your Liberty `server.xml`:
 
-A template server.xml is provided [here](./etc/config/liberty/server.xml).
+```xml
+<featureManager>
+    <feature>cicsts:core-1.0</feature>
+    <feature>servlet-5.0</feature>
+    <feature>jdbc-4.3</feature>
+</featureManager>
+```
 
-### Option 1 - Configure the DB2CONN with CEDA at a terminal
+A template `server.xml` is provided [here](./etc/config/liberty/server.xml).
 
-Ensure a CICS DB2CONN is installed and connected. 
+### Install a CICS DB2CONN resource
+
+Ensure a CICS `DB2CONN` is installed and connected:
 
 ```
 CEDA DEFINE DB2CONN(JODBCONN) GROUP(CDEVJLDB)
-```
-```
 CEDA INSTALL DB2CONN(JODBCONN) GROUP(CDEVJLDB)
 ```
 
-### Option 2 - Configure the DB2CONN with CICS Explorer
-1. Definitions > Db2 > Db2 Connection Definitions
-2. Right-click > New...
-3. Fill in the Name and Group with `CDEVJLDB`
-4. Right-click and install the new definition
-5. Ensure it is CONNECTED
+### CICS Bundle Plugin Deployment (Gradle/Maven)
 
-> Note: The DB2ID differs between DB2 versions and the system you are running your CICS region on. Consult your CICS system programmer if you are unsure.
+**Configure your JVM server name** (default is `DFHWLP`):
 
+Gradle:
+```shell
+./gradlew clean build "-Pcics.jvmserver=MYJVM"
+```
 
----
+Maven:
+```shell
+./mvnw clean verify "-Dcics.jvmserver=MYJVM"
+```
 
-## Deploying to CICS
+**Deploy the bundle:**
 
-### Option 1 - Deploying using CICS Explorer SDK and the provided CICS bundle project
-1. Deploy the CICS bundle project 'com.ibm.cics.server.examples.wlp.jdbc.bundle' from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard. This CICS bundle includes the WAR bundlepart to run the sample.
-
-
-### Option 2 - Deploying using CICS Explorer SDK with own CICS bundle project
-1. Copy and paste the built WAR from your *projects/cics-java-liberty-jdbc-web/target* or *projects/cics-java-liberty-jdbc-web/build/libs* directory into a new Eclipse CICS bundle project.
-2. Create a new bundlepart that references the WAR file. 
-3. Optionally customise the CICS bundle contents, perhaps adding a TRANDEF of your choice
-4. Right click using the ** Export Bundle Project to z/OS UNIX File System ** wizard.
-
-
-### Option 3 - Deploying using CICS Explorer (Remote System Explorer) and CICS Bundle ZIP
-1. Connect to USS on the host system
-2. Create the bundle directory for the project.
-3. Copy & paste the built CICS bundle ZIP file from your *projects/cics-java-liberty-jdbc-bundle/target* or *projects/cics-java-liberty-jdbc-bundle/build/distributions* directory to z/FS on the host system into the bundle directory.
-4. Extract the ZIP by right-clicking on the ZIP file > User Action > unjar...
-5. Refresh the bundle directory
-
-
-### Option 4 - Deploying using command line tools
-1. Upload the built CICS bundle ZIP file from your *projects/cics-java-liberty-jdbc-bundle/target* or *projects/cics-java-liberty-jdbc-bundle/build/distributions* directory to z/FS on the host system (e.g. FTP).
-2. Connect to USS on the host system (e.g. SSH).
-3. Create the bundle directory for the project.
-4. Move the CICS bundle ZIP file into the bundle directory.
-5. Change directory into the bundle directoy.
-6. Extract the CICS bundle ZIP file. This can be done using the `jar` command. For example:
+1. Upload the CICS bundle ZIP to zFS:
+   - Gradle: `cics-java-liberty-jdbc-cicsbundle/build/distributions/`
+   - Maven: `cics-java-liberty-jdbc-cicsbundle/target/`
+2. On z/OS, extract the bundle:
    ```shell
-   jar xf file.zip
+   jar xf cics-java-liberty-jdbc-cicsbundle.zip
+   ```
+3. Create and install a CICS BUNDLE resource definition pointing to the extracted directory:
+   ```
+   CEDA DEFINE BUNDLE(JDBCBNDL) GROUP(CDEVJLDB) BUNDLEDIR(/path/to/bundle)
+   CEDA INSTALL BUNDLE(JDBCBNDL) GROUP(CDEVJLDB)
    ```
 
----
+### CICS Explorer SDK Deployment
 
+This repository includes a pre-configured Eclipse CICS bundle project `cics-java-liberty-jdbc-cicsbundle-eclipse`.
 
-## Running the sample
-The servlet is accessed with the following URL: [http://zos.example.com:9080/cics-java-liberty-jdbc-web/database](http://zos.example.com:9080/cics-java-liberty-jdbc-web/database).
+1. Right-click `cics-java-liberty-jdbc-cicsbundle-eclipse` → **Export Bundle Project to z/OS UNIX File System** and follow the wizard.
 
-If the test is successful, you will see a response similar to the following written to the browser:
+### Direct Liberty Application Deployment
 
-`Db2 current timestamp: 2024-01-01 09:30:00.000000.`
+1. Build the WAR using Gradle or Maven (see [Building the Sample](#building-the-sample))
+2. Upload the WAR file to zFS
+3. Add an `<application>` element to your Liberty `server.xml`:
 
-If the EMP table is available, the full sample can be accessed with the following URL: [http://zos.example.com:9080/cics-java-liberty-jdbc-web/](http://zos.example.com:9080/cics-java-liberty-jdbc-web/). This is a HTML page that communicates with a servlet backend to display the employees in the EMP table.
+```xml
+<application id="cics-java-liberty-jdbc"
+    location="${server.config.dir}/apps/cics-java-liberty-jdbc.war"
+    name="cics-java-liberty-jdbc" type="war">
+    <application-bnd>
+        <security-role name="cicsAllAuthenticated">
+            <special-subject type="ALL_AUTHENTICATED_USERS"/>
+        </security-role>
+    </application-bnd>
+</application>
+```
 
+## Running the Sample
 
-## Reference
-*  Sample SQLJ Git repository  [cics-java-liberty-sqlj](https://github.com/cicsdev/cics-java-liberty-sqlj)
-*  CICS Knowledge Center [Configuring a Liberty JVM server](https://www.ibm.com/docs/en/cics-ts/latest?topic=server-configuring-liberty-jvm)
-*  CICS Knowledge Center [Configuring a JVM server to support Db2](https://www.ibm.com/docs/en/cics-ts/latest?topic=programs-configuring-jvm-server-support-db2)
+1. Verify the application started successfully in Liberty by checking for `CWWKT0016I` in `messages.log`:
+   ```
+   CWWKT0016I: Web application available (default_host): http://hostname:9080/cics-java-liberty-jdbc/
+   ```
+2. Test basic Db2 connectivity at:
+   `http://hostname:9080/cics-java-liberty-jdbc/database`
+
+   If successful, you will see a response like:
+   ```
+   Db2 current timestamp: 2024-01-01 09:30:00.000000.
+   ```
+3. If the `EMP` table is available, access the full employee browser at:
+   `http://hostname:9080/cics-java-liberty-jdbc/`
+
+   This HTML page communicates with the servlet backend to display employees from the `EMP` table.
+
+## Additional Resources
+
+- [CICS TS Documentation](https://www.ibm.com/docs/en/cics-ts)
+- [WebSphere Liberty Documentation](https://www.ibm.com/docs/en/was-liberty)
+- [Db2 EMP sample table](https://www.ibm.com/docs/en/db2-for-zos/latest?topic=tables-employee-table-dsn8d10emp)
+- [Db2 sample tables](https://www.ibm.com/docs/en/db2-for-zos/latest?topic=zos-db2-sample-tables)
 
 ## License
+
 This project is licensed under [Apache License Version 2.0](LICENSE).
+
+## Contributing
+
+This sample is maintained by IBM CICS development. We welcome bug reports and feature requests via GitHub Issues. Contributions are welcome and reviewed on a case-by-case basis — please read the [contributing guidelines](https://github.com/cicsdev/.github/blob/main/CONTRIBUTING.md) before opening a pull request. For CICS product questions, contact IBM Support.

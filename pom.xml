@@ -2,7 +2,7 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ibm.cicsdev</groupId>
@@ -12,26 +12,11 @@
 
     <name>CICS Liberty JDBC Application</name>
     <description>Sample JDBC enterprise Java web application demonstrating how to access a Db2 database from a web servlet in CICS Liberty.</description>
-    <url>https://github.com/cicsdev/cics-java-liberty-jdbc/</url>
 
     <modules>
-        <module>cics-java-liberty-jdbc-web</module>
-        <module>cics-java-liberty-jdbc-bundle</module>
+        <module>cics-java-liberty-jdbc-app</module>
+        <module>cics-java-liberty-jdbc-cicsbundle</module>
     </modules>
-
-    <licenses>
-        <license>
-            <name>Apache-2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>IBM CICS Transaction Server for z/OS</name>
-            <url>https://www.ibm.com/products/cics-transaction-server</url>
-        </developer>
-    </developers>
 
     <properties>
         <!-- CICS bundle properties -->
@@ -40,7 +25,18 @@
 
         <!-- Java project properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
