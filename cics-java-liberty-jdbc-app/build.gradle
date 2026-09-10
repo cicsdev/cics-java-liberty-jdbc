@@ -1,0 +1,45 @@
+plugins
+{
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'war'
+}
+
+java
+{
+    toolchain
+    {
+        languageVersion = JavaLanguageVersion.of(java_version)
+    }
+}
+
+eclipse
+{
+    classpath
+    {
+        downloadJavadoc = true
+    }
+    wtp
+    {
+        facet
+        {
+            facet name: 'jst.web', version: '3.1'
+        }
+        component
+        {
+            contextPath = 'cics-java-liberty-jdbc'
+        }
+    }
+}
+
+war
+{
+    archiveFileName = 'cics-java-liberty-jdbc.war'
+}
+
+dependencies
+{
+    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+    compileOnly 'javax.annotation:javax.annotation-api:1.2'
+}

@@ -4,7 +4,7 @@
 	<!-- Enable features -->
 	<featureManager>
 		<feature>cicsts:core-1.0</feature>
-		<feature>jsp-2.3</feature>
+		<feature>servlet-3.1</feature>
 		<feature>jdbc-4.1</feature>
 	</featureManager>
 

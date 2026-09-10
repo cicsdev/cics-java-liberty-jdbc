@@ -1,4 +1,9 @@
-rootProject.name = 'com.ibm.cicsdev.springboot.jdbc'
+plugins
+{
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
 
-include(':cics-java-liberty-jdbc-web')
-include(':cics-java-liberty-jdbc-bundle')
+rootProject.name = 'cics-java-liberty-jdbc'
+
+include(':cics-java-liberty-jdbc-app')
+include(':cics-java-liberty-jdbc-cicsbundle')

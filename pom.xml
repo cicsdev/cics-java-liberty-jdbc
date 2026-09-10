@@ -2,7 +2,7 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ibm.cicsdev</groupId>
@@ -15,8 +15,8 @@
     <url>https://github.com/cicsdev/cics-java-liberty-jdbc/</url>
 
     <modules>
-        <module>cics-java-liberty-jdbc-web</module>
-        <module>cics-java-liberty-jdbc-bundle</module>
+        <module>cics-java-liberty-jdbc-app</module>
+        <module>cics-java-liberty-jdbc-cicsbundle</module>
     </modules>
 
     <licenses>
@@ -43,5 +43,17 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>

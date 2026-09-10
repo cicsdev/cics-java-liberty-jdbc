@@ -1,0 +1,19 @@
+plugins
+{
+    id 'com.ibm.cics.bundle' version '1.0.8'
+}
+
+dependencies
+{
+    cicsBundlePart project(path: ':cics-java-liberty-jdbc-app', configuration: 'archives')
+}
+
+cicsBundle
+{
+    build
+    {
+        defaultJVMServer = project.findProperty("cics.jvmserver") ?: "DFHWLP"
+    }
+}
+
+description = 'CICS Liberty JDBC Application - CICS Bundle'
